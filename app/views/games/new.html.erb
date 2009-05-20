@@ -7,13 +7,25 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
-  <p>
-    <%= f.label :letters_remaining %><br />
-    <%= f.text_field :letters_remaining %>
-  </p>
+
+  Users:
+  <%= hidden_field_tag "game[seats_attributes][][user_id]", current_user.id %>
+  <div class="multiselect">
+    <select multiple="multiple">
+      <%= options_from_collection_for_select @users, :id, :login %>
+    </select>
+    <select multiple="multiple" name="game[seats_attributes][][user_id]">
+    </select>
+  </div>
+
   <p>
     <%= f.submit 'Create' %>
   </p>
 <% end %>
 
 <%= link_to 'Back', games_path %>
+<% javascript_tag do %>
+  $(function() {
+    $('.multiselect').multiselect({autoSize: true});
+  })
+<% end %>

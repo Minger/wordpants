@@ -1,8 +1,11 @@
 require 'test_helper'
 
 class BoardTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  def setup
+    @board = Factory(:board)
+  end
+
+  test "belongs to game" do
+    assert_respond_to @board, :game
   end
 end

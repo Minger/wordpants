@@ -1,8 +1,10 @@
 class GamesController < ApplicationController
+  before_filter :require_user
+
   # GET /games
   # GET /games.xml
   def index
-    @games = Game.all
+    @games = current_user.games
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,10 +27,15 @@ class GamesController < ApplicationController
   # GET /games/new.xml
   def new
     @game = Game.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @game }
+    @users = User.all(:conditions => ['id != ?', current_user.id])
+    if @users.empty?
+      flash[:notice] = "No other users!"
+      redirect_to games_url
+    else
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @game }
+      end
     end
   end
 

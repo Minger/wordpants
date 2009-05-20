@@ -1,15 +1,14 @@
-<h1>Listing games</h1>
+<h1>Your games</h1>
 
+<% if @games.length > 0 -%>
 <table>
   <tr>
     <th>Name</th>
-    <th>Letters remaining</th>
   </tr>
 
 <% @games.each do |game| %>
   <tr>
     <td><%=h game.name %></td>
-    <td><%=h game.letters_remaining %></td>
     <td><%= link_to 'Show', game %></td>
     <td><%= link_to 'Edit', edit_game_path(game) %></td>
     <td><%= link_to 'Destroy', game, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -18,5 +17,9 @@
 </table>
 
 <br />
-
+<% else -%>
+<p>
+  You don't have any games.
+</p>
+<% end -%>
 <%= link_to 'New game', new_game_path %>

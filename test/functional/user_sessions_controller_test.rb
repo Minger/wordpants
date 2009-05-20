@@ -10,7 +10,7 @@ class UserSessionsControllerTest < ActionController::TestCase
     post :create, :user_session => { :login => "huge", :password => "small" }
     assert user_session = UserSession.find
     assert_equal users(:huge), user_session.user
-    assert_redirected_to account_path
+    assert_redirected_to root_url
   end
 
   test "should destroy user session" do

@@ -1,13 +1,11 @@
-<p>
-  <b>Name:</b>
-  <%=h @game.name %>
-</p>
+<h1><%=h @game.name %></h1>
 
-<p>
-  <b>Letters remaining:</b>
-  <%=h @game.letters_remaining %>
-</p>
-
-
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<table id="board">
+<%- (1..15).each do |row| -%>
+  <tr>
+  <%- ('a'..'o').each do |col| -%>
+    <%= cell(row, col) %>
+  <%- end -%>
+  </tr>
+<%- end -%>
+</table>

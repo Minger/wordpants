@@ -1,8 +1,15 @@
 require 'test_helper'
 
 class SeatTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  def setup
+    @seat = Factory(:seat)
+  end
+
+  test "belongs to user" do
+    assert_respond_to @seat, :user
+  end
+
+  test "belongs to game" do
+    assert_respond_to @seat, :game
   end
 end
