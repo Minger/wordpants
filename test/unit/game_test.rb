@@ -23,11 +23,20 @@ class GameTest < ActiveSupport::TestCase
         2 => { :user => user_2 }
       }
     })
-    assert game.valid?
+    game.save
     assert_equal 2, game.seats.count
   end
 
   test "has one board" do
     assert_respond_to @game, :board
+  end
+
+  test "has an initial state of unstarted" do
+    assert_equal 'unstarted', @game.status
+  end
+
+  test "can be started" do
+    @game.start!
+    assert_equal 'started', @game.reload.status
   end
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090508232656) do
+ActiveRecord::Schema.define(:version => 20090521220945) do
 
   create_table "boards", :force => true do |t|
     t.integer  "game_id"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20090508232656) do
     t.string   "letters_remaining"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "status"
   end
 
   create_table "plays", :force => true do |t|
