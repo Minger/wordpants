@@ -39,4 +39,24 @@ class GameTest < ActiveSupport::TestCase
     @game.start!
     assert_equal 'started', @game.reload.status
   end
+
+  test "requires name" do
+    @game.name = nil
+    assert !@game.valid?
+  end
+
+  test "requires no more than 4 seats" do
+    users = Array.new(5) { Factory(:user) }
+    game  = Game.create({
+      :name => 'pantalones',
+      :seats_attributes => {
+        1 => { :user => users[0] },
+        2 => { :user => users[1] },
+        3 => { :user => users[2] },
+        4 => { :user => users[3] },
+        5 => { :user => users[4] }
+      }
+    })
+    assert !game.valid?
+  end
 end

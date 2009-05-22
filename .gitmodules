@@ -1,0 +1,3 @@
+[submodule "vendor/plugins/bootstrapper"]
+	path = vendor/plugins/bootstrapper
+	url = git://github.com/sevenwire/bootstrapper.git

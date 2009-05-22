@@ -1,8 +1,8 @@
 Factory.define :user do |user|
   user.login { Forgery(:internet).user_name }
   user.email { Forgery(:internet).email_address }
-  user.password { Forgery(:basic).password }
-  user.password_confirmation { |u| u.password }
+  user.password 'secret'
+  user.password_confirmation 'secret'
 end
 
 Factory.define :seat do |seat|

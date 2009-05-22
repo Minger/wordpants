@@ -43,12 +43,17 @@ class GamesControllerTest < ActionController::TestCase
     assert_redirected_to games_path
   end
 
-  test "should create game" do
+  test "should create and start game" do
     assert_difference('Game.count') do
-      post :create, :game => { }
+      post :create, :game => {:name => 'Huge'}
     end
-
+    assert assigns(:game).started?
     assert_redirected_to game_path(assigns(:game))
+  end
+
+  test "should find users for failed create" do
+    post :create, :game => {}
+    assert_equal [users(:huge)], assigns(:users)
   end
 
   test "should show game" do
@@ -56,22 +61,21 @@ class GamesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get edit" do
-    get :edit, :id => Factory(:game).to_param
-    assert_response :success
-  end
-
-  test "should update game" do
-    put :update, :id => Factory(:game).to_param, :game => { }
-    assert_redirected_to game_path(assigns(:game))
-  end
-
-  test "should destroy game" do
-    game = Factory(:game)
-    assert_difference('Game.count', -1) do
-      delete :destroy, :id => game.to_param
+  test "should not get edit" do
+    assert_raise ActionController::UnknownAction do
+      get :edit, :id => Factory(:game).to_param
     end
+  end
 
-    assert_redirected_to games_path
+  test "should not update game" do
+    assert_raise ActionController::UnknownAction do
+      put :update, :id => Factory(:game).to_param, :game => { }
+    end
+  end
+
+  test "should not destroy game" do
+    assert_raise ActionController::UnknownAction do
+      delete :destroy, :id => Factory(:game).to_param
+    end
   end
 end

@@ -42,4 +42,11 @@ class SeatTest < ActiveSupport::TestCase
     seat = Factory.build(:seat, :game => game)
     assert !seat.valid?
   end
+
+  test "requires no more than 4 seats per game" do
+    game = Factory(:game)
+    4.times { Factory(:seat, :game => game) }
+    seat = Factory.build(:seat, :game => game)
+    assert !seat.valid?
+  end
 end

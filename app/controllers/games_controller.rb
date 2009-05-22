@@ -39,10 +39,10 @@ class GamesController < ApplicationController
     end
   end
 
-  # GET /games/1/edit
-  def edit
-    @game = Game.find(params[:id])
-  end
+#  # GET /games/1/edit
+#  def edit
+#    @game = Game.find(params[:id])
+#  end
 
   # POST /games
   # POST /games.xml
@@ -51,42 +51,44 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
+        @game.start!
         flash[:notice] = 'Game was successfully created.'
         format.html { redirect_to(@game) }
         format.xml  { render :xml => @game, :status => :created, :location => @game }
       else
+        @users = User.all(:conditions => ['id != ?', current_user.id])
         format.html { render :action => "new" }
         format.xml  { render :xml => @game.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  # PUT /games/1
-  # PUT /games/1.xml
-  def update
-    @game = Game.find(params[:id])
+#  # PUT /games/1
+#  # PUT /games/1.xml
+#  def update
+#    @game = Game.find(params[:id])
+#
+#    respond_to do |format|
+#      if @game.update_attributes(params[:game])
+#        flash[:notice] = 'Game was successfully updated.'
+#        format.html { redirect_to(@game) }
+#        format.xml  { head :ok }
+#      else
+#        format.html { render :action => "edit" }
+#        format.xml  { render :xml => @game.errors, :status => :unprocessable_entity }
+#      end
+#    end
+#  end
 
-    respond_to do |format|
-      if @game.update_attributes(params[:game])
-        flash[:notice] = 'Game was successfully updated.'
-        format.html { redirect_to(@game) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @game.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /games/1
-  # DELETE /games/1.xml
-  def destroy
-    @game = Game.find(params[:id])
-    @game.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(games_url) }
-      format.xml  { head :ok }
-    end
-  end
+#  # DELETE /games/1
+#  # DELETE /games/1.xml
+#  def destroy
+#    @game = Game.find(params[:id])
+#    @game.destroy
+#
+#    respond_to do |format|
+#      format.html { redirect_to(games_url) }
+#      format.xml  { head :ok }
+#    end
+#  end
 end
