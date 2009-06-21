@@ -13,6 +13,9 @@ end
 Factory.define :game do |game|
   game.name { Forgery(:word).word }
   game.association :board
+  game.seats_attributes do
+    [{:user => Factory(:user)}, {:user => Factory(:user)}]
+  end
 end
 
 Factory.define :board do |board|

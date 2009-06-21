@@ -59,4 +59,28 @@ class GameTest < ActiveSupport::TestCase
     })
     assert !game.valid?
   end
+
+  test "requires at least 2 seats" do
+    game  = Game.create({
+      :name => 'pantalones',
+      :seats_attributes => {
+        1 => { :user => Factory(:user) }
+      }
+    })
+    assert !game.valid?
+  end
+
+  test "has a bag of letters" do
+    letters = ("a".."z").inject("") {|s,l| s<<(l*Letters::INFO[l][:total])}
+    assert_equal letters + "__", @game.letters_remaining
+  end
+
+  test "distributes letters to seats on start" do
+    count = @game.letters_remaining.length
+    @game.start!
+    @game.seats.each do |seat|
+      assert_match /^[a-z_]{7}$/, seat.letters
+    end
+    assert_equal (count - @game.seats.count * 7), @game.letters_remaining.length
+  end
 end

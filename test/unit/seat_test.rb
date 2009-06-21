@@ -14,13 +14,9 @@ class SeatTest < ActiveSupport::TestCase
   end
 
   test "sets position before create" do
-    game   = Factory(:game)
-    user_1 = Factory(:user)
-    user_2 = Factory(:user)
-    seat_1 = Seat.create(:game => game, :user => user_1)
-    seat_2 = Seat.create(:game => game, :user => user_2)
-    assert_equal 1, seat_1.position
-    assert_equal 2, seat_2.position
+    game = Factory(:game)
+    assert_equal 1, game.seats[0].position
+    assert_equal 2, game.seats[1].position
   end
 
   # most of the time seats will be created at the same time as a game, via
@@ -45,7 +41,7 @@ class SeatTest < ActiveSupport::TestCase
 
   test "requires no more than 4 seats per game" do
     game = Factory(:game)
-    4.times { Factory(:seat, :game => game) }
+    2.times { Factory(:seat, :game => game) }
     seat = Factory.build(:seat, :game => game)
     assert !seat.valid?
   end
